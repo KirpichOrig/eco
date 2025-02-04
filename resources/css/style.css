@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+    outline: none;
+    transition: .3s;
+}
+/* font */
+.montserrat {
+    font-family: "Montserrat", serif;
+}
+.caslo {
+    font-family: "Libre Caslon Text", serif; 
+}
+.bebas {
+    font-family: "Bebas Neue", serif;
+}
+.fira {
+    font-family: "Arima Sans", serif;
+}
+/* section */
+.section {
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.section-0 {
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/* .section-50 {
+    max-width: 1430px;
+    margin: 110px auto 0 auto;
+} */
+.section-50 {
+    max-width: 1430px;
+    margin: 50px auto 0 auto;
+    /* padding: 0 20px; */
+}
+.section-160 {
+    max-width: 1340px;
+    margin: 160px auto 0 auto;
+    padding: 0 20px;
+}
