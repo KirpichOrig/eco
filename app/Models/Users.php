@@ -10,7 +10,7 @@ class Users extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', // Добавляем 'role' в fillable
+        'name', 'email', 'password', 'role',
     ];
 
     protected $hidden = ['password'];

@@ -18,20 +18,20 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return view('welcome');  // Главная страница
+    return view('welcome'); 
 });
 
 Route::get('/login', function () {
-    return view('pages.login');  // Страница авторизации
+    return view('pages.login');  
 });
 
 Route::get('/register', function () {
-    return view('pages.reg');  // Страница регистрации
+    return view('pages.register');
 })->name('register.form');
 Route::post('/register', [UsersController::class, 'register'])->name('register');
 
 Route::get('/catalog', function () {
-    return view('pages.catalog');  // Страница регистрации
+    return view('pages.catalog'); 
 });
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -43,22 +43,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::get('/edit', action: function () {
-    return view('pages.edit');  // Страница регистрации
+    return view('pages.edit');  
 });
 
 Route::get('/product/{id}', [ProductController::class, 'show']);
 
 Route::post('/logout', function () {
     Auth::logout();
-    session()->invalidate(); // Очищаем сессию
-    session()->regenerateToken(); // Генерируем новый CSRF-токен
+    session()->invalidate(); 
+    session()->regenerateToken(); 
     return redirect('/login');
 })->name('logout');
 
 Route::get('/catalog', [ProductController::class, 'index'])->name('catalog');
 
-Route::get('/profil', [ProfileController::class, 'index'])->name('profile');
-// Route::get('/profil', 'profile')->name('profile');
 
 Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 

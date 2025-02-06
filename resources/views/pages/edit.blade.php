@@ -17,7 +17,7 @@
                     <input class="border-b pl-1 pr-1 placeholder:text-black" type="text" name="cost" value="{{ $product->cost }}" placeholder="Cost">
                     <input class="border-b pl-1 pr-1 placeholder:text-black" type="file" name="image">
                     <div class="w-full text-center mt-10">
-                        <button class="border h-[44px] w-[180px] text-[16px] hover:bg-black hover:text-white"" type="submit">Save changes</button>
+                        <button class="border h-[44px] w-[180px] text-[16px] hover:bg-black hover:text-white" type="submit">Save changes</button>
                     </div>
 
                 </form>
