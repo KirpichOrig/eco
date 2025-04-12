@@ -27,6 +27,18 @@
                     <input type="text" name="description" placeholder="Описание" class="border-b pl-1 pr-1 placeholder:text-black" required>
                     <input type="number" name="cost" placeholder="Цена" class="border-b pl-1 pr-1 placeholder:text-black" required>
                     <input type="file" name="image" class="border-b pl-1 pr-1 placeholder:text-black" required>
+                    
+                    <!-- Выбор категории -->
+                    <select name="category_id" class="border-b placeholder:text-black">
+                        <option value="">Выберите категорию</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    
+                    <!-- Выбор цвета -->
+                    <input type="text" name="color" placeholder="Цвет" class="border-b pl-1 pr-1 placeholder:text-black">
+                    
                     <div class="w-full text-center mt-10">
                         <button type="submit" class="border h-[44px] w-[180px] text-[16px] hover:bg-black hover:text-white">ГОТОВО</button>
                     </div>

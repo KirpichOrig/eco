@@ -2,7 +2,7 @@
 <html lang="en">
 @include('partials.head')
 
-<body>
+<body class="bg-[#fcf3eb]">
     <div class="flex flex-col min-h-screen">
         @include('partials.header')
         <div class="section montserrat flex flex-1 items-center">
@@ -55,7 +55,7 @@
                                             <span class="text-[#72A233] text-[17px] mr-1">★</span>
                                             307 reviews
                                         </p> --}}
-                                        <p class="text-[16px]">${{ $product->cost }}</p>
+                                        <p class="text-[16px]">₽{{ $product->cost }}</p>
                                     </div>
                                     <div class="flex gap-1">
                                         <a href="{{ url('/product/' . $product->id) }}"

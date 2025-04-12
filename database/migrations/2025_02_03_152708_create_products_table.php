@@ -17,14 +17,18 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('cost', 10, 2);
             $table->string('image');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
-    }    
+    }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('products');
     }

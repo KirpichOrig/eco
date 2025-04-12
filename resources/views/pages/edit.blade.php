@@ -6,26 +6,48 @@
         <div class="w-1/2 h-screen flex flex-col justify-center items-center relative">
             <div class="flex flex-col gap-8">
                 <div>
-                    <p class="font-[700] text-[50px]">Edit product</p>
-                    <p class="mt-[-8px]">Thanks for the work</p>
+                    <p class="font-[700] text-[42px]">Редактировать товар</p>
+                    <p class="mt-[-8px]">Спасибо за работу!</p>
                 </div>
-                <form class="flex flex-col w-[500px] gap-2" action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                @if ($errors->any())
+                    <div class="text-red-500">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(session('success'))
+                    <p class="text-green-500">{{ session('success') }}</p>
+                @endif
+                <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col w-[500px] gap-2">
                     @csrf
                     @method('PUT')
-                    <input class="border-b pl-1 pr-1 placeholder:text-black" type="text" name="name" value="{{ $product->name }}" placeholder="Name">
-                    <input class="border-b pl-1 pr-1 placeholder:text-black" type="text" name="description" value="{{ $product->description }}" placeholder="Description">
-                    <input class="border-b pl-1 pr-1 placeholder:text-black" type="text" name="cost" value="{{ $product->cost }}" placeholder="Cost">
-                    <input class="border-b pl-1 pr-1 placeholder:text-black" type="file" name="image">
+                    <input type="text" name="name" value="{{ old('name', $product->name) }}" placeholder="Название" class="border-b pl-1 pr-1 placeholder:text-black" required>
+                    <input type="text" name="description" value="{{ old('description', $product->description) }}" placeholder="Описание" class="border-b pl-1 pr-1 placeholder:text-black" required>
+                    <input type="number" name="cost" value="{{ old('cost', $product->cost) }}" placeholder="Цена" class="border-b pl-1 pr-1 placeholder:text-black" required>
+                    <input type="file" name="image" class="border-b pl-1 pr-1 placeholder:text-black">
+                    
+                    <!-- Выбор категории -->
+                    <select name="category_id" class="border-b pl-1 pr-1 placeholder:text-black">
+                        <option value="">Выберите категорию</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    
+                    <!-- Выбор цвета -->
+                    <input type="text" name="color" value="{{ old('color', $product->color) }}" placeholder="Цвет" class="border-b pl-1 pr-1 placeholder:text-black">
+                    
                     <div class="w-full text-center mt-10">
-                        <button class="border h-[44px] w-[180px] text-[16px] hover:bg-black hover:text-white" type="submit">Save changes</button>
+                        <button type="submit" class="border h-[44px] w-[180px] text-[16px] hover:bg-black hover:text-white">СОХРАНИТЬ</button>
                     </div>
-
                 </form>
             </div>
-            <a class="absolute top-4 left-4 font-[600]" href="../">back</a>
+            <a class="absolute top-4 left-4 font-[600]" href="{{ route('catalog') }}">назад</a>
         </div>
         <img src="{{ asset('img/cat.jpg') }}" class="brightness-[85%] w-1/2 h-screen object-cover" alt="">
-
     </div>
 </body>
 </html>

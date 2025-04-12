@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function showForm()
     {
-        return view('pages.add'); // Указываем путь к файлу
+        $categories = Category::all();
+        return view('pages.add', compact('categories')); // Передаем категории в представление
     }
 
     public function store(Request $request)
@@ -20,19 +22,23 @@ class ProductController extends Controller
             'description' => 'required|string',
             'cost' => 'required|numeric|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
+            'color' => 'nullable|string|max:255',
         ]);
-    
+
         // Сохранение изображения
         $imagePath = $request->file('image')->store('products', 'public');
-    
+
         // Создание товара в базе
         Product::create([
             'name' => $request->name,
             'description' => $request->description,
             'cost' => $request->cost,
             'image' => $imagePath, // Сохраняем путь
+            'category_id' => $request->category_id,
+            'color' => $request->color,
         ]);
-    
+
         return redirect()->route('add.form')->with('success', 'Товар добавлен!');
     }
 
@@ -40,19 +46,17 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return view('pages.catalog', compact('products'));
-    }   
+    }
 
-
-
-
-// Метод для отображения формы редактирования
+    // Метод для отображения формы редактирования
     public function edit($id)
     {
         // Находим товар по ID
         $product = Product::findOrFail($id);
+        $categories = Category::all();
 
-        // Возвращаем представление и передаем товар
-        return view('pages.edit', compact('product'));
+        // Возвращаем представление и передаем товар и категории
+        return view('pages.edit', compact('product', 'categories'));
     }
 
     // Метод для обновления товара
@@ -64,36 +68,41 @@ class ProductController extends Controller
             'description' => 'required|string',
             'cost' => 'required|numeric',
             'image' => 'nullable|image|max:2048', // проверка на изображение
+            'category_id' => 'nullable|exists:categories,id',
+            'color' => 'nullable|string|max:255',
         ]);
-    
+
         // Получаем товар из базы данных
         $product = Product::findOrFail($id);
-    
+
         // Проверка на наличие нового изображения
         if ($request->hasFile('image')) {
             // Сохранение нового изображения
             $imagePath = $request->file('image')->store('products', 'public');
-            
+
             // Удаление старого изображения, если оно есть
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
-    
+
             // Обновляем путь к новому изображению
             $product->image = $imagePath;
         }
-    
+
         // Обновление других данных товара
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->cost = $request->input('cost');
-        
+        $product->category_id = $request->input('category_id');
+        $product->color = $request->input('color');
+
         // Сохраняем товар
         $product->save();
-    
+
         // Редирект с сообщением об успешном обновлении
-        return redirect()->route('catalog')->with('success', 'Product updated successfully');
+        return redirect()->route('catalog')->with('success', 'Товар обновлен!');
     }
+
     public function show($id)
     {
         $product = Product::findOrFail($id);
@@ -113,6 +122,6 @@ class ProductController extends Controller
         $product->delete();
 
         // Редирект обратно на страницу каталога с сообщением об успешном удалении
-        return redirect()->route('catalog')->with('success', 'Product deleted successfully');
+        return redirect()->route('catalog')->with('success', 'Товар удален!');
     }
 }

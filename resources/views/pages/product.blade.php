@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('partials.head')
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col bg-[#fcf3eb]">
     @include('partials.header')
 
     <div class="montserrat section flex-1 flex items-center justify-center">
-        <div class="h-full flex items-center justify-center gap-4 pt-16 pb-16">
+        <div class="h-full flex items-center justify-center gap-4 pt-4 pb-4">
             <!-- Изображение продукта -->
             <img src="{{ asset('storage/' . $product->image) }}" class="w-2/3" alt="{{ $product->name }}">
             
@@ -20,9 +20,16 @@
                 <!-- Описание продукта -->
                 <p class="text-[30px] font-[600]">"{{ $product->description }}"</p>
 
-                <div class="flex gap-1">
-                    <p>Категория</p>
-                    <p>Цвет</p>
+                <!-- Информация о категории и цвете -->
+                <div class="flex gap-4 mb-4">
+                    <div>
+                        <p class="font-bold">Категория:</p>
+                        <p>{{ $product->category ? $product->category->name : 'Нет категории' }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Цвет:</p>
+                        <p>{{ $product->color ?? 'Нет цвета' }}</p>
+                    </div>
                 </div>
 
                 <div class="mt-4 flex gap-4">
@@ -34,7 +41,7 @@
                     </div>
 
                     <!-- Кнопка покупки -->
-                    <button class="w-72 h-16 bg-[#72a233] text-white font-[700] text-[14px] hover:bg-[#546b3b]">
+                    <button class="w-72 h-16 bg-[#72A233] text-white font-[700] text-[14px] hover:bg-[#546b3b]">
                         В корзину - ${{ $product->cost }}
                     </button>
                 </div>
