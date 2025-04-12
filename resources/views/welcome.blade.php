@@ -38,45 +38,6 @@
     <button class="next-button absolute top-[325px] right-[70px] text-[32px] text-white" type="button" aria-label="Посмотреть следующий слайд">&gt;</button>
   </div>
 
-  <!-- catalog -->
-
-  <div class="bebas section-160 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @for ($i = 0; $i < 1; $i++)
-      <div class="group">
-        <div class="relative w-full aspect-[3/2]">
-          <img
-            class="absolute inset-0 w-full h-full object-cover bg-gray-500 transition-shadow duration-300 group-hover:shadow-[0_0_11px_3px_rgba(0,0,0,0.35)]"
-            src="{{ asset('img/product/2.png') }}" alt="Product"
-          />
-        </div>
-        <div class="mt-2">
-          <div class="text-[22px]">Deodorant Cream</div>
-          <div class="flex justify-between">
-            <div class="mt-[-4px]">
-              <p class="text-[14px]">
-                <span class="text-[#72A233] text-[17px]">★</span>
-                <span class="text-[#72A233] text-[17px]">★</span>
-                <span class="text-[#72A233] text-[17px]">★</span>
-                <span class="text-[#72A233] text-[17px]">★</span>
-                <span class="text-[#72A233] text-[17px] mr-1">★</span>
-                307 reviews
-              </p>
-              <p class="text-[16px] mt-[-4px]">$14.00</p>
-            </div>
-            <div class="flex gap-2">
-              <a href="{{ url('/product') }}" class="text-[16px] h-[38px] px-[20px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                more
-              </a>
-              <a href="{{ url('/basket') }}" class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                add to card
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endfor
-  </div>
-
   <!-- about -->
 
   <div class="mt-[160px] mb-[160px]">

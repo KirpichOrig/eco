@@ -7,8 +7,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 
 Route::resource('categories', CategoryController::class);
+
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -38,6 +41,14 @@ Route::get('/where', function () {
     return view('pages.where');  
 });
 
+Route::get('/addcategory', function () {
+    return view('pages.addcategory');  
+});
+
+Route::get('/admin', function () {
+    return view('pages.admin');  
+});
+
 Route::get('/profil', [ProfileController::class, 'index'])->name('profile');
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -47,8 +58,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/add', [ProductController::class, 'showForm'])->name('add.form');
     Route::post('/add', [ProductController::class, 'store'])->name('add.store');
-    Route::get('/addcategory', [CategoryController::class, 'create'])->name('addcategory.form');
-    Route::post('/addcategory', [CategoryController::class, 'store'])->name('addcategory.store');
 });
 
 Route::get('/edit', function () {
@@ -69,3 +78,15 @@ Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('pro
 Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
 
 Route::put('/product/{id}', [ProductController::class, 'update'])->name('product.update');
+
+// Добавление товара в корзину
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+
+// Получение товаров из корзины
+Route::get('/cart/items', [CartController::class, 'getCartItems'])->name('cart.items');
+
+// Удаление товара из корзины
+Route::delete('/cart/delete/{itemId}', [CartController::class, 'deleteCartItem'])->name('cart.delete');
+
+// Обновление количества товара в корзине
+Route::put('/cart/update/{itemId}', [CartController::class, 'updateCartItemQuantity'])->name('cart.update');

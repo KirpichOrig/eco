@@ -29,7 +29,7 @@
                     <input type="file" name="image" class="border-b pl-1 pr-1 placeholder:text-black" required>
                     
                     <!-- Выбор категории -->
-                    <select name="category_id" class="border-b pl-1 pr-1 placeholder:text-black">
+                    <select name="category_id" class="border-b placeholder:text-black">
                         <option value="">Выберите категорию</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>

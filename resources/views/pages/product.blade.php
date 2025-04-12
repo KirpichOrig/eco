@@ -1,74 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('partials.head')
-<body class="bg-[#fcf3eb]">
-    <div class="flex flex-col min-h-screen">
-        @include('partials.header')
-        <div class="section montserrat flex flex-1 items-center">
-            <div>
-                <div class="section">
-                    <p class="text-[32px]"><a href="/" class="text-[#72A233]">Домой</a> / <span class="cursor-pointer">Каталог</span></p>
-                    <div class="flex gap-2">
-                        <p>Фильтр</p>
-                        <form action="{{ route('catalog') }}" method="GET" class="flex gap-1">
-                            <select name="category" id="category" class="border p-1" onchange="this.form.submit()">
-                                <option value="">Все категории</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <!-- Сортировка по дате добавления всегда активна и не отображается в списке выбора -->
-                        </form>
+<body class="min-h-screen flex flex-col bg-[#fcf3eb]">
+    @include('partials.header')
+
+    <div class="montserrat section flex-1 flex items-center justify-center">
+        <div class="h-full flex items-center justify-center gap-4 pt-16 pb-16">
+            <!-- Изображение продукта -->
+            <img src="{{ asset('storage/' . $product->image) }}" class="w-2/3" alt="{{ $product->name }}">
+            
+            <div class="w-1/2">
+                <!-- Хлебные крошки -->
+                <div class="flex gap-2 mb-2 text-[14px]">
+                    <a href="/" class="text-[#72A233]">Домой</a> /
+                    <a href="{{ route('catalog') }}" class="text-[#72A233]">Каталог</a> /
+                    <a href="#" class="">{{ $product->name }}</a>
+                </div>
+                
+                <!-- Описание продукта -->
+                <p class="text-[30px] mb-4">"{{ $product->description }}"</p>
+
+                <!-- Информация о категории и цвете -->
+                <div class="flex gap-4 mb-4">
+                    <div>
+                        <p class="font-bold">Категория:</p>
+                        <p>{{ $product->category ? $product->category->name : 'Нет категории' }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Цвет:</p>
+                        <p>{{ $product->color ?? 'Нет цвета' }}</p>
                     </div>
                 </div>
-                <div class="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    @foreach ($products as $product)
-                        <div class="group">
-                            <div class="relative w-full aspect-[3/2]">
-                                <img class="absolute inset-0 w-full h-full object-cover bg-gray-500 transition-shadow duration-300 group-hover:shadow-[0_0_11px_3px_rgba(0,0,0,0.35)]"
-                                    src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" />
-                                @if (auth()->user() && auth()->user()->role == 'admin')
-                                    <form action="{{ route('product.destroy', $product->id) }}" method="POST"
-                                        onsubmit="return confirm('Вы уверены, что хотите удалить данный товар?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="absolute px-2 py-1 bg-red-500 text-white top-1 right-2">
-                                            del
-                                        </button>
-                                    </form>
-                                @endif
-                            </div>
-                            <div class="mt-2 w-[417px]">
-                                <div class="text-[22px]">{{ $product->name }}</div>
-                                <div class="flex justify-between items-center">
-                                    <div class="">
-                                        <p class="text-[16px]">₽{{ $product->cost }}</p>
-                                    </div>
-                                    <div class="flex gap-1">
-                                        <a href="{{ url('/product/' . $product->id) }}"
-                                            class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                                            add to cart
-                                        </a>
-                                        <!-- Проверка роли администратора -->
-                                        @if (auth()->user() && auth()->user()->role == 'admin')
-                                            <a href="{{ url('/product/' . $product->id . '/edit') }}"
-                                                class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                                                edit
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+
+                <div class="mt-4 flex gap-4">
+                    <!-- Количество товара -->
+                    <div class="w-24 h-16 bg-white border-2 border-[#72a233] flex items-center justify-between px-2">
+                        <button class="text-3xl text-[#72a233]" id="decrement">-</button>
+                        <span id="counter" class="text-2xl font-bold text-[#72a233] w-12 text-center">1</span>
+                        <button class="text-3xl text-[#72a233]" id="increment">+</button>
+                    </div>
+
+                    <!-- Кнопка покупки -->
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="quantity" id="quantity" value="1">
+                        <button type="submit"
+                            class="w-72 h-16 bg-[#72A233] text-white font-[700] text-[14px] hover:bg-[#546b3b]">
+                            В корзину - ₽{{ $product->cost }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        @include('partials.footer')
     </div>
-</body>
 
+    <script>
+        const decrementButton = document.getElementById('decrement');
+        const incrementButton = document.getElementById('increment');
+        const counter = document.getElementById('counter');
+        const quantityInput = document.getElementById('quantity');
+
+        let count = parseInt(counter.textContent);
+
+        decrementButton.addEventListener('click', () => {
+            if (count > 1) {
+                count--;
+                counter.textContent = count;
+                quantityInput.value = count;
+            }
+        });
+
+        incrementButton.addEventListener('click', () => {
+            if (count < 10) {
+                count++;
+                counter.textContent = count;
+                quantityInput.value = count;
+            }
+        });
+    </script>
+
+    @include('partials.footer')
+</body>
 </html>

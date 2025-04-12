@@ -32,8 +32,10 @@
                     @foreach ($products as $product)
                         <div class="group">
                             <div class="relative w-full aspect-[3/2]">
-                                <img class="absolute inset-0 w-full h-full object-cover bg-gray-500 transition-shadow duration-300 group-hover:shadow-[0_0_11px_3px_rgba(0,0,0,0.35)]"
-                                    src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" />
+                                <a href="{{ url('/product/' . $product->id) }}">
+                                    <img class="absolute inset-0 w-full h-full object-cover bg-gray-500 transition-shadow duration-300 group-hover:shadow-[0_0_11px_3px_rgba(0,0,0,0.35)]"
+                                        src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" />
+                                </a>
                                 @if (auth()->user() && auth()->user()->role == 'admin')
                                     <form action="{{ route('product.destroy', $product->id) }}" method="POST"
                                         onsubmit="return confirm('Вы уверены, что хотите удалить данный товар?');">
@@ -53,15 +55,18 @@
                                         <p class="text-[16px]">₽{{ $product->cost }}</p>
                                     </div>
                                     <div class="flex gap-1">
-                                        <a href="{{ url('/product/' . $product->id) }}"
-                                            class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                                            add to cart
-                                        </a>
+                                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="text-[16px] px-2 py-2 flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
+                                                В корзину
+                                            </button>
+                                        </form>
                                         <!-- Проверка роли администратора -->
                                         @if (auth()->user() && auth()->user()->role == 'admin')
                                             <a href="{{ url('/product/' . $product->id . '/edit') }}"
-                                                class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-                                                edit
+                                                class="text-[16px] px-2 py-2 flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
+                                                Редактировать
                                             </a>
                                         @endif
                                     </div>
