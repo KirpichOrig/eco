@@ -15,18 +15,21 @@
                     <!-- Появляется только если роль admin -->
                     @if($user->role == 'admin')
                         <div class="mt-6">
-                            <a href="{{ url('/add') }}" class="border border-black px-8 py-4 h-[40px] w-[180px] text-[16px] hover:bg-black hover:text-white">
-                                Add product
+                            <a href="{{ url('/add') }}" class="mr-2 border border-black px-8 py-4 h-[40px] w-[180px] text-[16px] hover:bg-black hover:text-white">
+                                Добавить товар
+                            </a>
+                            <a href="{{ url('/addcategor') }}" class="border border-black px-8 py-4 h-[40px] w-[180px] text-[16px] hover:bg-black hover:text-white">
+                                Добавить категорию
                             </a>
                         </div>
                     @endif
                 </div>
             </div>
-            <a class="absolute top-4 left-4 font-[600]" href="../">back</a>
+            <a class="absolute top-4 left-4 font-[600]" href="../">назад</a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="absolute top-4 left-18 font-[600]">
-                    log out
+                    выход
                 </button>
             </form>
         </div>

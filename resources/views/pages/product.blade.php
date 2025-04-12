@@ -4,12 +4,12 @@
 <body class="min-h-screen flex flex-col">
     @include('partials.header')
 
-    <div class="section flex-1 flex items-center justify-center">
+    <div class="montserrat section flex-1 flex items-center justify-center">
         <div class="h-full flex items-center justify-center gap-4 pt-16 pb-16">
             <!-- Изображение продукта -->
             <img src="{{ asset('storage/' . $product->image) }}" class="w-2/3" alt="{{ $product->name }}">
             
-            <div class="w-1/2 montserrat">
+            <div class="w-1/2">
                 <!-- Хлебные крошки -->
                 <div class="flex gap-2 mb-2 text-[14px]">
                     <a href="../" class="text-[#72A233]">Home</a> /
@@ -20,15 +20,9 @@
                 <!-- Описание продукта -->
                 <p class="text-[30px] font-[600]">"{{ $product->description }}"</p>
 
-                <div>
-                    <p class="text-[16px]">
-                        <span class="text-[#72A233] text-[20px]">★</span>
-                        <span class="text-[#72A233] text-[20px]">★</span>
-                        <span class="text-[#72A233] text-[20px]">★</span>
-                        <span class="text-[#72A233] text-[20px]">★</span>
-                        <span class="text-[#72A233] text-[20px] mr-1">★</span>
-                        307 reviews
-                    </p>
+                <div class="flex gap-1">
+                    <p>Категория</p>
+                    <p>Цвет</p>
                 </div>
 
                 <div class="mt-4 flex gap-4">
@@ -41,7 +35,7 @@
 
                     <!-- Кнопка покупки -->
                     <button class="w-72 h-16 bg-[#72a233] text-white font-[700] text-[14px] hover:bg-[#546b3b]">
-                        BUY - ${{ $product->cost }}
+                        В корзину - ${{ $product->cost }}
                     </button>
                 </div>
             </div>

@@ -28,4 +28,12 @@ class UsersController extends Controller
         // Редирект на страницу регистрации с сообщением об успешной регистрации
         return redirect()->route('register.form')->with('success', 'Регистрация успешна!');
     }
+    public function profile()
+    {
+        // Получаем текущего аутентифицированного пользователя
+        $user = auth()->user();
+
+        // Передаем пользователя в представление
+        return view('profil', compact('user'));
+    }   
 }

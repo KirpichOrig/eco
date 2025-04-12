@@ -49,3 +49,6 @@ document.addEventListener('click', (e) => {
         });
     }
 });
+
+// корзина
+

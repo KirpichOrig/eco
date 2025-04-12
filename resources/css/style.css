@@ -6,15 +6,27 @@
     outline: none;
     transition: .3s;
 }
+::placeholder {
+    font-weight: lighter;
+    opacity: .65;
+}
 /* font */
 .montserrat {
     font-family: "Montserrat", serif;
+    font-weight: 700;
 }
 .caslo {
     font-family: "Libre Caslon Text", serif; 
 }
 .bebas {
     font-family: "Bebas Neue", serif;
+}
+.bebas-like {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.5px; /* Уменьшаем ширину символов */
+    text-transform: uppercase;
 }
 .fira {
     font-family: "Arima Sans", serif;

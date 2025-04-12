@@ -22,7 +22,13 @@
                 <a href="">Catalog</a>
             </div> -->
             <p class="">@The site was created for the purpose of passing a training internship</p>
-            <p>Bemov Danil</p>
+            <div class="flex gap-6">
+                <div class="flex gap-2">
+                    <p>VK</p>
+                    <p>Telegram</p>
+                </div>
+                <p>Bemov Danil</p>
+            </div>
         </div>
     </footer>
 </body>

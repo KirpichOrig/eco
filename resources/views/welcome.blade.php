@@ -41,7 +41,7 @@
   <!-- catalog -->
 
   <div class="bebas section-160 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @for ($i = 0; $i < 9; $i++)
+    @for ($i = 0; $i < 1; $i++)
       <div class="group">
         <div class="relative w-full aspect-[3/2]">
           <img
@@ -63,9 +63,14 @@
               </p>
               <p class="text-[16px] mt-[-4px]">$14.00</p>
             </div>
-            <a href="{{ url('/product') }}" class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
-              add to card
-            </a>
+            <div class="flex gap-2">
+              <a href="{{ url('/product') }}" class="text-[16px] h-[38px] px-[20px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
+                more
+              </a>
+              <a href="{{ url('/basket') }}" class="text-[16px] h-[38px] w-[124px] flex justify-center items-center border border-black hover:border-[rgb(106_161_34)] hover:text-[rgb(106_161_34)]">
+                add to card
+              </a>
+            </div>
           </div>
         </div>
       </div>
