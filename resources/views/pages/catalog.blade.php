@@ -8,24 +8,24 @@
         <div class="section montserrat flex flex-1 items-center">
             <div>
                 <div class="section">
-                    <p class="text-[32px]"><a href="../" class="text-[#72A233]">Домой</a> / <span class="cursor-pointer">Каталог</span></p>
-                    <div class="flex gap-2">
+                    <p class="text-[32px]"><a href="/" class="text-[#72A233]">Домой</a> / <span class="cursor-pointer">Каталог</span></p>
+                    <div class="flex gap-2 mb-1">
                         <p>Фильтр</p>
-                        <div class="flex gap-1">
-                            <select name="" id="">
-                                <option value="">Мебель</option>
-                                <option value="">Декор</option>
+                        <form action="{{ route('catalog') }}" method="GET" class="flex gap-1">
+                            <select name="category" id="category" onchange="this.form.submit()">
+                                <option value="">Все категории</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
                             </select>
-                            <select name="" id="">
-                                <option value="">Дешевле</option>
-                                <option value="">Дороже</option>
+                            <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+                                <option value="created_at" {{ $sortBy == 'created_at' ? 'selected' : '' }} disabled hidden>Новые в начале</option>
+                                <option value="cost" {{ $sortBy == 'cost' ? 'selected' : '' }}>Дешевле</option>
+                                <option value="cost_desc" {{ $sortBy == 'cost_desc' ? 'selected' : '' }}>Дороже</option>
                             </select>
-                            <select name="" id="">
-                                <option value="">Крастный</option>
-                                <option value="">Белый</option>
-                                <option value="">Черный</option>
-                            </select>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -50,11 +50,6 @@
                                 <div class="text-[22px]">{{ $product->name }}</div>
                                 <div class="flex justify-between items-center">
                                     <div class="">
-                                        {{-- <p class="text-[14px]">
-                                            <span class="text-[#72A233] text-[17px]">★</span>
-                                            <span class="text-[#72A233] text-[17px] mr-1">★</span>
-                                            307 reviews
-                                        </p> --}}
                                         <p class="text-[16px]">₽{{ $product->cost }}</p>
                                     </div>
                                     <div class="flex gap-1">

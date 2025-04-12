@@ -33,11 +33,13 @@
                     <select name="category_id" class="border-b pl-1 pr-1 placeholder:text-black">
                         <option value="">Выберите категорию</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
                         @endforeach
                     </select>
                     
-                    <!-- Выбор цвета -->
+                    <!-- Поле для цвета -->
                     <input type="text" name="color" value="{{ old('color', $product->color) }}" placeholder="Цвет" class="border-b pl-1 pr-1 placeholder:text-black">
                     
                     <div class="w-full text-center mt-10">

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -42,10 +41,33 @@ class ProductController extends Controller
         return redirect()->route('add.form')->with('success', 'Товар добавлен!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('pages.catalog', compact('products'));
+        $categories = Category::all();
+        $selectedCategory = $request->input('category');
+        $sortBy = $request->input('sort_by', 'created_at'); // По умолчанию сортируем по дате добавления
+
+        $products = Product::query();
+
+        if ($selectedCategory) {
+            $products->where('category_id', $selectedCategory);
+        }
+
+        switch ($sortBy) {
+            case 'cost':
+                $products->orderBy('cost', 'asc');
+                break;
+            case 'cost_desc':
+                $products->orderBy('cost', 'desc');
+                break;
+            default:
+                $products->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $products = $products->get();
+
+        return view('pages.catalog', compact('products', 'categories', 'selectedCategory', 'sortBy'));
     }
 
     // Метод для отображения формы редактирования
